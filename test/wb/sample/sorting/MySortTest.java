@@ -52,7 +52,7 @@ public class MySortTest {
 		assertArrayEquals(expected, result);
 	}
 	
-	/*
+	
 	@Test
 	public void testQuickSort() {
 		// setup
@@ -63,7 +63,7 @@ public class MySortTest {
 		int[] expected = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9};
 		assertArrayEquals(expected, result);
 	}
-	*/
+	
 	
 	@Test
 	public void testBubbleSort() {

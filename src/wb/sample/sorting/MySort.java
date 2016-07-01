@@ -10,6 +10,27 @@ public class MySort {
 		array[b] = temp;
 	}
 	
+	//BUBBLE SORT 
+	
+	/*
+	 * bubble sort is O(n^2)
+	 */
+	public static int[] bubbleSort(int[] ints){
+		int[] result = ints;
+		int n = result.length;
+		boolean swapped = true;
+		while(swapped){
+			swapped = false;
+			for(int i = 0; i < n-1; i++){
+				if(result[i] > result[i+1]){
+					swap(result, i, i+1);
+					swapped = true;
+				}
+			}
+		}
+		return result;
+	}
+	
 	//SIMPLE SORTS
 	/*
 	 * insertion sort is O(n^2)
@@ -135,56 +156,54 @@ public class MySort {
 	}
 	
 	/*
-	 * Quick sort
+	 * Quick sort is O(n^2) for worst case, but 
+	 * typically acts like O(n log n).
 	 */
+	
+	private static int[] qsArray;
+	
 	public static int[] quickSort(int[] ints){
 		//TODO implement quickSort
-		int[] result = ints;
+		qsArray = ints;
+		quickSort(0, qsArray.length-1);
 		
-		return result;
+		return qsArray;
 	}
 	
+	private static void quickSort(int left, int right){
+		if(right <= left){
+			return;
+		} else {
+			int pivot = qsArray[right];
+			int pivotIndex = partition(left, right, pivot);
+			
+			quickSort(left, pivotIndex - 1);
+			quickSort(pivotIndex + 1, right);
+		}
+	}
 	
-	//BUBBLE SORT AND VARIANTS
-	
-	/*
-	 * bubble sort is O(n^2)
-	 */
-	public static int[] bubbleSort(int[] ints){
-		int[] result = ints;
-		int n = result.length;
-		boolean swapped = true;
-		while(swapped){
-			swapped = false;
-			for(int i = 0; i < n-1; i++){
-				if(result[i] > result[i+1]){
-					swap(result, i, i+1);
-					swapped = true;
-				}
+	private static int partition(int left, int right, int pivot){
+		int leftPointer = left - 1;
+		int rightPointer = right;
+		
+		while(true){
+			while(qsArray[++leftPointer] < pivot){
+				//This block intentionally left blank
+			}
+			while(rightPointer > 0 && qsArray[--rightPointer] > pivot);{
+				//This block intentionally left blank
+			}
+			if(leftPointer >= rightPointer){
+				break;
+			} else {
+				swap(qsArray, leftPointer, rightPointer);
 			}
 		}
-		return result;
+		swap(qsArray, leftPointer, right);
+		return leftPointer;
 	}
 	
-	/*
-	 * Shell sort
-	 */
+
 	
-	/*
-	 * Comb sort
-	 */
-	
-	//DISTRIBUTION SORT
-	
-	/*
-	 * Counting sort
-	 */
-	
-	/*
-	 * Bucket sort
-	 */
-	
-	/*
-	 * Radix sort
-	 */
+
 }

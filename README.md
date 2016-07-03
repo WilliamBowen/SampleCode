@@ -3,4 +3,6 @@ The purpose of this repository is to hold sample code designed to demonstrate my
 
 MySort class includes example implementations of bubble sort, insertion sort, selection sort, merge sort, and quick sort algorithms. Each method takes an array of integers and returns a sorted array in ascending order.
 
-MyHashTable (work in progress).
+ChainingHashTable uses an array of single linked lists to store key-value pairs.
+
+OpenAddressHashTable uses an expanding array to store key-value pairs.

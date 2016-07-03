@@ -1,6 +1,6 @@
 package wb.sample.hashtable;
 
-public class HashTableChaining<K, V> {
+public class ChainingHashTable<K, V> {
 	
 	private int tableSize;	
 	private int loadFactor = 10;
@@ -8,11 +8,11 @@ public class HashTableChaining<K, V> {
 	private Node<K, V>[] hashTable;
 	
 	//constructors
-	public HashTableChaining(){
+	public ChainingHashTable(){
 		this(16);
 	}
 	
-	public HashTableChaining(int size){
+	public ChainingHashTable(int size){
 		this.tableSize = size;
 		hashTable = new Node[size];
 		
@@ -25,7 +25,7 @@ public class HashTableChaining<K, V> {
 	}
 	
 	private void resize(int newSize){
-		HashTableChaining<K, V> newTable = new HashTableChaining<>(newSize);
+		ChainingHashTable<K, V> newTable = new ChainingHashTable<>(newSize);
 		for(Node<K, V> entry : hashTable){
 			while(entry != null){
 				newTable.put(entry.key, entry.value);

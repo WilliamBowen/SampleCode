@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class HashTableChainingTest {
-	private HashTableChaining<Integer, String> table = new HashTableChaining<>();
+public class ChainingHashTableTest {
+	private ChainingHashTable<Integer, String> table = new ChainingHashTable<>();
 	
 	@Test
 	public void testIsEmpty() {

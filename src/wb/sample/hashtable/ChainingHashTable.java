@@ -121,7 +121,7 @@ public class ChainingHashTable<K, V> {
 	}
 	
 	public boolean containsValue(V value){
-		//TODO return true if one or more keys points to 
+		//TODO return true if one or more keys points to value
 	}
 	*/
 	

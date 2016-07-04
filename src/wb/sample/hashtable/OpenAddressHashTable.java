@@ -28,16 +28,42 @@ public class OpenAddressHashTable<K, V> {
 	private void resize(int newSize){
 		OpenAddressHashTable<K, V> newTable = new OpenAddressHashTable<>(newSize);
 		for(Node<K, V> entry : hashTable){
-			if(entry != null){
+			if(entry != null && !entry.isDeleted()){
 				newTable.put(entry.key, entry.value);			
 			}
 		}
 		hashTable = newTable.hashTable;
 		tableSize = newTable.tableSize;
 	}
-	
+	/*
+	 * Adds a new key-value pair to the hash table;
+	 */
 	public V put(K key, V value){
-		//TODO implement open addressing put
+		int hash = getHash(key);
+		int index = hash;
+		Node<K, V> newNode = new Node<>(key, value, hash);
+		//check for collisions
+		while(hashTable[index] != null){
+			//if collision occurs, check if node has been deleted
+			//otherwise see if keys match
+			if(key.equals(hashTable[index].key)){
+				V oldValue = hashTable[index].value;
+				hashTable[index] = newNode;
+				return oldValue;
+			} else if(hashTable[index].isDeleted()){
+				break;
+			} else {
+				index++;
+				if(index == tableSize);
+				index = 0;
+			}
+		}
+		//if the iteration finds an unused space, insert new node into that space.
+		hashTable[index] = newNode;
+		size++;
+		if(size > loadFactor * tableSize){
+			resize(2 * size);
+		}
 		return null;
 	}
 	/*
@@ -59,15 +85,47 @@ public class OpenAddressHashTable<K, V> {
 	}
 	
 	public V get(K key){
-		//TODO implement open addressing get method
+		int hash = getHash(key);
+		int index = hash;
+		
+		while(hashTable[index] != null){
+			//if collision occurs, check if node has been deleted
+			//otherwise see if keys match
+			if(hashTable[index].isDeleted() || !key.equals(hashTable[index].key)){
+				index++;
+				if(index == tableSize) index = 0;
+			} else if(key.equals(hashTable[index].key)){
+				 return hashTable[index].value;
+			}
+		}
+		
 		return null;
 	}
 	
 
 	
 	public V remove(K key){
-		//TODO implement open addressing remove method
+		int hash = getHash(key);
+		int index = hash;
+		
+		
+		while(hashTable[index] != null){
+			
+			if(key.equals(hashTable[index].key)){
+				V removedValue = hashTable[index].value;
+				hashTable[index].delete();
+				size--;
+				return removedValue;
+			} else {
+				index++;
+				if(index == tableSize);
+				index = 0;
+			}
+		}
+		//if the iteration finds an unused space, insert new node into that space.
+		
 		return null;
+
 	}
 	
 	/* Methods to implement 
@@ -78,7 +136,7 @@ public class OpenAddressHashTable<K, V> {
 	}
 	
 	public boolean containsValue(V value){
-		//TODO return true if one or more keys points to 
+		//TODO return true if one or more keys points to value
 	}
 	*/
 	
@@ -90,11 +148,21 @@ public class OpenAddressHashTable<K, V> {
 		final K key;
 		V value;
 		final int hash;
+		private boolean deleted = false;
 		
 		public Node(K k, V v, int h){
 			key = k;
 			value = v;
 			hash = h;
+		}
+		
+		public void delete(){
+			value = null;
+			deleted = true;
+		}
+		
+		public boolean isDeleted(){
+			return deleted;
 		}
 	}
 }
